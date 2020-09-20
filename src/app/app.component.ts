@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import {State} from './app.reducers';
+import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
+import {itemsSelector, RootState} from './store/root.state';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,10 @@ import {Observable} from 'rxjs';
 export class AppComponent implements OnInit {
   item$: Observable<string[]>;
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<RootState>) { }
 
   ngOnInit(): void {
-    this.item$ = this.store.pipe(select((state: State) => state.items));
+    this.item$ = this.store.pipe(itemsSelector);
   }
 
 }

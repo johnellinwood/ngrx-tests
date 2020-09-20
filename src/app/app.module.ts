@@ -1,10 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {StoreModule} from '@ngrx/store';
-import {itemsReducer} from './app.reducers';
-import {EffectsModule} from '@ngrx/effects';
-import {ItemEffects} from './app.effects';
+import {RootStore} from './store/store.module';
 
 @NgModule({
   declarations: [
@@ -12,8 +9,7 @@ import {ItemEffects} from './app.effects';
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({items: itemsReducer}),
-    EffectsModule.forRoot([ItemEffects])
+    RootStore
   ],
   providers: [],
   bootstrap: [AppComponent]
