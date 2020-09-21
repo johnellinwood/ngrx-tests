@@ -1,17 +1,11 @@
 import {Injectable} from '@angular/core';
-import {of} from 'rxjs';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {INIT} from '@ngrx/store';
-import {ROOT_EFFECTS_INIT, Actions, createEffect, ofType} from '@ngrx/effects';
-
-import * as ItemActions from './root.actions';
-import {ItemsService} from '../core/services/items.service';
+import {Actions, createEffect, ofType, ROOT_EFFECTS_INIT} from '@ngrx/effects';
+import {ItemsService} from '../features/items/items.service';
 
 @Injectable()
 export class RootEffects {
-
-  constructor(private actions$: Actions, private itemsService: ItemsService) {
-  }
 
   // Catch all actions and log them
   logActions$ = createEffect(() =>
@@ -30,23 +24,14 @@ export class RootEffects {
   rootEffectsInit$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROOT_EFFECTS_INIT),
-      map(() => ItemActions.loadItems())
-    ));
+      tap(() => console.log('Root effects initialized'))
+    ), {dispatch: false});
 
-  // TODO move this to a feature
-  loadItems$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ItemActions.loadItems),
-      switchMap(action =>
-        this.itemsService.get().pipe(
-          map(items => ItemActions.setItems(items)),
-          catchError(error => of(ItemActions.loadItemsError(error))),
-        )
-      )
-    ));
+  constructor(private actions$: Actions, private itemsService: ItemsService) {
+  }
 
   // Deferred effect execution some place in the middle of effect initialization
   // @Effect()
-  // init$ = defer(() => of(new ItemActions.Load(initialState)));
+  // init$ = defer(() => of(new Action...));
 
 }

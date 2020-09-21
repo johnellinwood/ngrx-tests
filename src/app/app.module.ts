@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {RootStore} from './store/store.module';
+import {ItemsModule} from './features/items/items.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import {RootStore} from './store/store.module';
   ],
   imports: [
     BrowserModule,
-    RootStore
+    RootStore,
+    ItemsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
